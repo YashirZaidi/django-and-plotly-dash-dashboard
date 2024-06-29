@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project Dashboard</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: #181936;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 90%;
+            margin: auto;
+            padding: 20px;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1.2fr 1.3fr 1fr;
+            gap: 20px;
+        }
+        .box, .box-chart {
+            padding: 15px;
+            margin: 10px;
+            border: 1px solid #444;
+            border-radius: 15px;
+            background-color: #2c2c54;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .box:hover, .box-chart:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        .box h2, .box p, label, .dropdown {
+            color: #fff;
+        }
+        .box p.value-text {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .dropdown:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Project Dashboard</h1>
+        <div>
+            <label for="manager-dropdown">Select Manager:</label>
+            <select id="manager-dropdown" onchange="this.form.submit()" name="manager">
+                {% for manager in managers %}
+                    <option value="{{ manager }}" {% if manager == selected_manager %}selected{% endif %}>{{ manager }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="grid-container">
+            <div class="box">
+                <h2>Total Projects</h2>
+                <p class="value-text">{{ total_projects }}</p>
+            </div>
+            <div class="box">
+                <h2>Avg Project Milestones</h2>
+                <p class="value-text">{{ avg_milestones }}</p>
+            </div>
+            <div class="box">
+                <h2>Completed Projects</h2>
+                <p class="value-text">{{ completed_projects }}</p>
+            </div>
+        </div>
+        <div class="grid-container">
+            <div class="box-chart">
+                {{ project_type_dist|safe }}
+            </div>
+            <div class="box-chart">
+                {{ projects_by_manager|safe }}
+            </div>
+            <div class="box-chart">
+                {{ completion_status|safe }}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
